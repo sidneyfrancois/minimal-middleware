@@ -26,6 +26,7 @@ public class QueryStringMiddleware
 
          await context.Response.WriteAsync("Class-based Middleware \n");
       }
+
       if (next != null)
       {
          await next(context);

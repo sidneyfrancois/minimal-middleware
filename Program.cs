@@ -48,6 +48,11 @@ app.Use(async (context, next) => {
    }); 
 });
 
+((IApplicationBuilder)app).Map("/branch-terminal", branch =>
+{
+   branch.Run(new QueryStringMiddleware().Invoke);
+});
+
 app.UseMiddleware<QueryStringMiddleware>();
 
 app.MapGet("/", () => "Hello World!");
