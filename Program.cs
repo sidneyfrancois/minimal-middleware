@@ -1,6 +1,9 @@
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using MinimalMiddleware;
+using System;
+using System.Threading.Tasks;
 
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
@@ -32,6 +35,17 @@ app.Use(async (context, next) => {
    }
 
    await next();
+});
+
+
+((IApplicationBuilder) app).Map("/branch", branch => 
+{
+   branch.UseMiddleware<QueryStringMiddleware>();
+
+   branch.Use(async (HttpContext context, Func<Task> next) =>
+   {
+      await context.Response.WriteAsync($"Branch middleware");
+   }); 
 });
 
 app.UseMiddleware<QueryStringMiddleware>();
