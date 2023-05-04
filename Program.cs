@@ -42,7 +42,7 @@ app.Use(async (context, next) => {
 {
    branch.UseMiddleware<QueryStringMiddleware>();
 
-   branch.Use(async (HttpContext context, Func<Task> next) =>
+   branch.Run(async (context) =>
    {
       await context.Response.WriteAsync($"Branch middleware");
    }); 
